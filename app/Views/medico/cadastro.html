@@ -1,0 +1,196 @@
+{% extends "base.html" %} 
+{% block title %}
+  <title>Prontuário | Cadastro</title>
+{% endblock %} 
+{% block li %}
+<li class="active"><a href="http://prontuario.dev/medicos/cadastro"><i class="fa fa-user-plus"></i> Cadastro</a></li>
+<li ><a href="http://prontuario.dev/medicos"><i class="fa fa-edit"></i> Lista médica</a></li>
+{% endblock %}
+{% block contentheader %}
+<h1>
+        Área Médica
+        <small>Cadastro</small>
+    </h1>
+<ol class="breadcrumb">
+  <li><a href="#"><i class="fa fa-user-plus"></i>Médicos</a></li>
+  <li class="active">Cadastro</li>
+</ol>
+{% endblock %} 
+{% block content %} 
+{% if erros %}
+<div class="alert alert-danger alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <h4><i class="icon fa fa-ban"></i> Atenção</h4> 
+  Preencha os campos necessários para concluir o cadastro!
+</div>
+{% endif %} 
+{% if exist %}
+<div class="alert alert-warning alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <h4><i class="icon fa fa-warning"></i> Dados já existentes</h4> Verifique se esses dados já estão cadastrado em outro usuário!
+</div>
+{% endif %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-primary {% if erros %} box-danger {% endif %}  {% if exist %} box-warning {% endif %} ">
+      <div class="box-header with-border">
+        <h3 class="box-title">Cadastro médico</h3>
+      </div>
+      <div class="row">
+
+        <form role="form" method="post" action="/medicos/register">
+          <div class="col-md-4">
+            <div class="box-body">
+              <div class="form-group  {% if erros["nome"] %} has-error {% endif %} ">
+                <label for="exampleInputEmail1">{% if erros["nome"] %} <i class="fa fa-times-circle-o"></i> {% endif %} Nome Completo <b style="color: red">*</b></label>
+                <input value="{{dados['nome']}}" name="nome" type="text" class="form-control" id="exampleInputEmail1" placeholder="Nome completo"> {% if erros["nome"] %} <span class="help-block">Nome é obrigatório</span> {% endif %}
+              </div>
+              <div class="form-group {% if exist["crm"] %} has-warning {% endif %} {% if erros["crm"] %} has-error {% endif %}">
+                <label for="exampleInputEmail1">
+                      {% if erros["crm"] %} <i class="fa fa-times-circle-o"></i> {% endif %}
+                      {% if exist['crm'] %} <i class="fa fa-bell-o"></i> </i> {% endif %}
+                       CRM <b style="color: red">*</b></label>
+                <input value="{{dados['crm']}}" name="crm" type="text" class="form-control" id="exampleInputEmail1" placeholder="CRM"> {% if erros["crm"] %} <span class="help-block">CRM é obrigatório</span> {% endif %} {% if exist["crm"] %} <span class="help-block">CRM já está cadastrado</span>                {% endif %}
+
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Endereço</label>
+                <input value="{{dados['endereco']}}" name="endereco" type="text" class="form-control" id="exampleInputPassword1" placeholder="Endereço">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Bairro</label>
+                <input value="{{dados['bairro']}}" name="bairro" type="text" class="form-control" id="exampleInputPassword1" placeholder="Bairro">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Complemento</label>
+                <input value="{{dados['complemento']}}" name="complemento" type="text" class="form-control" id="exampleInputPassword1" placeholder="Complemento">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">CEP</label>
+                <input value="{{dados['cep']}}" name="cep" id="CEP" type="text" class="form-control" id="exampleInputPassword1" placeholder="CEP" data-inputmask='"mask": "99999-999"' data-mask>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group {% if exist["cpf"] %} has-warning {% endif %} {% if erros["cpf"] %} has-error {% endif %}">
+                    <label for="exampleInputEmail1">
+                        {% if erros["cpf"] %} <i class="fa fa-times-circle-o"></i> {% endif %}
+                        {% if exist['cpf'] %} <i class="fa fa-bell-o"></i> </i> {% endif %}
+                         CPF <b style="color: red">*</b></label>
+                    <input value="{{dados['cpf']}}" name="cpf" type="text" class="form-control" id="exampleInputEmail1" placeholder="CPF" data-inputmask='"mask": "999.999.999-99"' data-mask> {% if erros["cpf"] %} <span class="help-block">CPF é obrigatório</span>                    {% endif %} {% if exist["cpf"] %} <span class="help-block">CPF já está cadastrado</span> {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <label>Estado</label>
+                    <select onchange="showHint(this.value)" name="estado" class="form-control select2" style="width: 100%;">
+                        <option>Selecione</option>
+                        {% for estado in estados %}
+                            <option value="{{estado.Uf}}">{{estado.Nome}}</option>
+                        {% endfor %}
+                  </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Cidade</label>
+                    <select id="txtHint" name="cidade" disabled="true" class="form-control select2 " style="width: 100%;">
+                      <option >Selecione</option>
+                  </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Naturalidade</label>
+                    <input value="{{dados['naturalidade']}}" name="naturalidade" type="text" class="form-control" id="exampleInputPassword1" placeholder="Naturalidade">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Nacionalidade</label>
+                    <input value="{{dados['nacionalidade']}}" name="nacionalidade" type="text" class="form-control" id="exampleInputPassword1" placeholder="Nacionalidade">
+                  </div>
+                  <div class="form-group {% if erros["data_nascimento"] %} has-error {% endif %}">
+                    <label>{% if erros["data"] %} <i class="fa fa-times-circle-o"></i>{% endif %} Data Nascimento <b style="color: red">*</b></label>
+
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+
+                      </div>
+                      <input value="{{dados['data_nascimento']}}" name="data_nascimento" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                    </div>
+                    {% if erros["data"] %} <span class="help-block">Data é obrigatório</span> {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group {% if exist["rg"] %} has-warning {% endif %}  {% if erros["rg"] %} has-error {% endif %}">
+                    <label for="exampleInputEmail1">
+                          {% if erros["rg"] %} <i class="fa fa-times-circle-o"></i>{% endif %}
+                          {% if exist['rg'] %} <i class="fa fa-bell-o"></i> </i> {% endif %}
+                          RG <b style="color: red">*</b></label>
+                    <input value="{{dados['rg']}}" name="rg" id="RG" type="text" class="form-control" id="exampleInputEmail1" placeholder="RG"> {% if erros["rg"] %} <span class="help-block">RG é obrigatório</span> {% endif %} {% if exist["rg"] %}
+                    <span class="help-block">RG já está cadastrado</span> {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Email</label>
+                    <input value="{{dados['email']}}" name="email" type="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
+                  </div>
+                  <div class="form-group">
+                    <label>Telefone</label>
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-phone"></i>
+                      </div>
+                      <input value="{{dados['telefone']}}" name="telefone" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
+                  <!-- phone mask -->
+                  <div class="form-group">
+                    <label>Celular</label>
+
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-phone"></i>
+                      </div>
+                      <input value="{{dados['celular']}}" name="celular" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <div class="form-group">
+                    <label>Telefone trabalho</label>
+
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-phone"></i>
+                      </div>
+                      <input value="{{dados['trabalho']}}" name="trabalho" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <div class="form-group">
+                    <label>Especialidades</label>
+                    <select name="especialidades[]" class="form-control select2" multiple="multiple" data-placeholder="Especialidades" style="width: 100%;">
+                              {% for esp in especialidades %}
+                                  <option>{{esp.nome}} </option>
+                              {% endfor %}
+                          </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="box-footer">
+              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="submit" class="btn btn-danger">Cancelar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,283 @@
+
+    <tr>
+      <td>{{medico.nome}}</td>
+      <td>{{medico.crm}}</td>
+      <td>
+        <div class="row linha4">
+          <button title="Visualizar" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default{{medico.crm}}">Visualizar <i class="fa fa-eye" data-toggle="modal" data-target="#exampleModal"></i> </button>
+        </div>
+      </td>
+      <td>
+        <div class="row linha4">
+          <button title="Visualizar"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-defaultc{{medico.crm}}">Visualizar <i class="fa fa-eye"></i> </button>
+        </div>
+      </td>
+      <td>
+        <div class="row linha4">
+          <button title="Visualizar" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-defaultv{{medico.crm}}"> <i class="fa fa-eye"></i> </button>
+          <a title="Editar" href="/medicos/editar/?dados={{medico.crm}}" class="btn btn-success"role="button"><i class="fa fa-edit"></i> </i></a>
+          <button title="Excluir" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-defaulta{{medico.crm}}"><i class="fa fa-close"></i> </button>
+        </div>
+      </td>
+
+       <!-- /.apagar -->
+       <div class="modal fade" id="modal-defaulta{{medico.crm}}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="alert alert-danger alert-dismissible modalre">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Atenção</h4>
+              </div>  
+              <div class="panel-body">
+              <h4> Ao confirma a exclução, você irá apagar totalmente os dados do médico: <strong>{{medico.nome}}</strong></h4>
+              <br>
+            </div>
+            <div class="modal-footer" style="background: white">
+              <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Cancelar</button>
+              <a href="/medicos/apagar/?dados={{medico.crm}}" class="btn btn-danger"role="button">Deletar <i class="fa fa-close"></i> </i></a>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.apagar -->
+
+      <div class="modal fade bs-example-modal-sm " tabindex="-1" id="modal-default{{medico.crm}}">
+        <div class="modal-dialog  modal-sm">
+          <div class="modal-content">
+            <div class="panel panel-primary" style="border-radius: 0; border: solid white 1px;">
+              <div class="panel-heading" style="border-radius: 0">
+                <h4> <strong>{{medico.nome}}</strong> </h4>
+                <h2 class="panel-title">Especialidades</h2>
+              </div>
+              <div class="panel-body">
+                <ul class="list-group">
+                  {% if medico.especialidades %} {% for esp in medico.especialidades %}
+                    <li class="list-group-item">
+
+                      <h4> <strong>{{esp.nome}}</strong> </h4>
+                    </li>
+                  {% endfor %} {% else %}
+                  <li class="list-group-item">
+                    <h4> <strong>Nenhuma especialidade cadastrada</strong> </h4>
+                  </li>
+                  {% endif %}
+                </ul>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+              </div>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <div class="modal fade bs-example-modal-sm " tabindex="-1" id="modal-defaultc{{medico.crm}}">
+        <div class="modal-dialog  modal-sm">
+          <div class="modal-content">
+            <div class="panel panel-primary modalre">
+              <div class="panel-heading" style="border-radius: 0">
+                <h4> <strong>{{medico.nome}}</strong> </h4>
+                <h2 class="panel-title">Contatos</h2>
+              </div>
+              <div class="panel-body">
+                <ul class="list-group">
+                  <div class="form-group">
+                    <li class="list-group-item">
+                      <h4> <strong>Telefone</strong> </h4>
+                      <input value="{{medico.telefone}}" name="celular" type="text" class="form-control" disabled data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                    </li>
+                    <li class="list-group-item">
+                      <h4> <strong>Celular</strong> </h4>
+                      <input value="{{medico.celular}}" name="celular" type="text" class="form-control" disabled data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                    </li>
+                    <li class="list-group-item">
+                      <h4> <strong>Trabalho</strong> </h4>
+                      <input value="{{medico.trabalho}}" name="celular" type="text" class="form-control" disabled data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                    </li>
+                    <li class="list-group-item">
+                      <h4> <strong>Email</strong> </h4>
+                      <input value="{{medico.email}}" name="celular" type="text" class="form-control" disabled>
+                    </li>
+                  </div>
+                </ul>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+              </div>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- inicio model ver -->
+      <div class="modal fade bs-example-modal-lg " tabindex="-1" id="modal-defaultv{{medico.crm}}">
+        <div class="modal-dialog modal-lg " role="document">
+          <div class="modal-content modalborda">
+          
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box box-primary ">
+                  <div class="box-header with-border">
+                    <h1 class="box-title">Dados médico</h1>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-4">
+                        <div class="box-body">
+                          <div class="form-group ">
+                            <label for="exampleInputEmail1">Nome Completo </label>
+                            <input value="{{medico['nome']}}" disabled  name="nome" type="text" class="form-control" id="exampleInputEmail1" placeholder="Nome completo"> {% if erros["nome"] %} <span class="help-block">Nome é obrigatório</span> {% endif %}
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">
+                                   CRM</label>
+                            <input value="{{medico['crm']}}" disabled  name="crm" type="text" class="form-control" id="exampleInputEmail1" placeholder="CRM">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Endereço</label>
+                            <input value="{{medico['endereco']}}" disabled  name="endereco" type="text" class="form-control" id="exampleInputPassword1" placeholder="Endereço">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Bairro</label>
+                            <input value="{{medico['bairro']}}" disabled  name="bairro" type="text" class="form-control" id="exampleInputPassword1" placeholder="Bairro">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Complemento</label>
+                            <input value="{{medico['complemento']}}" disabled  name="complemento" type="text" class="form-control" id="exampleInputPassword1" placeholder="Complemento">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">CEP</label>
+                            <input value="{{medico['cep']}}" disabled  name="cep" id="CEP" type="text" class="form-control" id="exampleInputPassword1" placeholder="CEP" data-inputmask='"mask": "99999-999"' data-mask>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">
+                                     CPF</label>
+                                <input value="{{medico['cpf']}}" disabled  name="cpf" type="text" class="form-control" id="exampleInputEmail1" placeholder="CPF" data-inputmask='"mask": "999.999.999-99"' data-mask> {% if erros["cpf"] %} <span class="help-block">CPF é obrigatório</span>                    {% endif %} {% if exist["cpf"] %} <span class="help-block">CPF já está cadastrado</span> {% endif %}
+                              </div>
+                              <div class="form-group">
+                                <label>Estado</label>
+                                <select name="estado" class="form-control select2" disabled  style="width: 100%;">
+                                    <option>{{medico['estado']}}</option>
+                              </select>
+                              </div>
+                            
+                              <div class="form-group">
+                                <label>Cidade</label>
+                                <select name="cidade" disabled  class="form-control select2 " style="width: 100%;">
+                                  <option >{{medico['cidade']}}</option>
+                              </select>
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">Naturalidade</label>
+                                <input value="{{medico['naturalidade']}}" disabled  name="naturalidade" type="text" class="form-control" id="exampleInputPassword1" placeholder="Naturalidade">
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">Nacionalidade</label>
+                                <input value="{{medico['nacionalidade']}}" disabled  name="nacionalidade" type="text" class="form-control" id="exampleInputPassword1" placeholder="Nacionalidade">
+                              </div>
+                              <div class="form-group">
+                                <label> Data Nascimento</label>
+            
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+            
+                                  </div>
+                                  <input value="{{medico['data_nascimento']}}" disabled  name="data" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                </div>
+                        
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">
+                                      RG</label>
+                                <input value="{{medico['rg']}}" name="rg" id="RG" disabled  type="text" class="form-control" id="exampleInputEmail1" placeholder="RG">
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">Email</label>
+                                <input value="{{medico['email']}}" name="email" disabled  type="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
+                              </div>
+                              <div class="form-group">
+                                <label>Telefone</label>
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                  </div>
+                                  <input value="{{medico['telefone']}}" disabled  name="telefone" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                                </div>
+                                <!-- /.input group -->
+                              </div>
+                              <!-- /.form group -->
+                              <!-- phone mask -->
+                              <div class="form-group">
+                                <label>Celular</label>
+            
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                  </div>
+                                  <input value="{{medico['celular']}}" disabled  name="celular" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                                </div>
+                                <!-- /.input group -->
+                              </div>
+                              <div class="form-group">
+                                <label>Telefone trabalho</label>
+            
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                  </div>
+                                  <input value="{{medico['trabalho']}}" disabled  name="trabalho" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                                </div>
+                                <!-- /.input group -->
+                              </div>
+                              <div class="form-group">
+                                <label>Especialidades</label>
+                                <div class="dropup">
+                                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Ver especialidade
+                                    <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" >
+                                    {% for esp in medico.especialidades %}
+                                      <li><a style="color: black">{{ esp.nome }}</a></li>
+                                    {% endfor %}
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="box-footer">
+                          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Fechar</button>
+                        </div>
+                      </div>
+                   
+                  </div>
+                </div>
+              </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <!-- fim model ver -->
+
+    </tr>
+ 

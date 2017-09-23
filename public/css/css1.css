@@ -1,0 +1,16 @@
+.mina{
+    background-image: url('/imagens/default.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: table;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    padding-bottom: 10%;
+}
+@font-face {
+    font-family: cs;
+    src: url('/fonts/cs.ttf');
+}
