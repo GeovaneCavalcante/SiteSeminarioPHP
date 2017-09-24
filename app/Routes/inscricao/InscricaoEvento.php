@@ -121,19 +121,39 @@ class InscricaoEvento{
               
                 $inscricao = new \App\Models\inscricao\InscricaoEvento();
                 $n = new \App\Controllers\inscricao\InscricaoList();
-                if ($inscricao->getInscricao($_GET['dados']) == 404){
-                    echo $this->twig->getTwig()->render('core\error.html');
-                }else{
-                    
-                    echo $this->twig->getTwig()->render('inscricao\editar.html', array(
-                        "user" => $_SESSION,
-                        "inscricao" => $inscricao->getInscricao($_GET['dados'])["resultado"]
-                    ));
-                }
+
+                echo $this->twig->getTwig()->render('inscricao\criacao.html', array(
+                    "user" => $_SESSION,
+
+                ));
+            
             
             }else{
                 $response->redirect('/login');
             }
+        });
+
+        $this->klein->respond('POST', '/admin/inscricoes/criar', function ($request, $response, $service) {
+            
+            $con = new \App\Controllers\inscricao\InscricaoEvento($_POST);
+            if($con->Validacao() or $con->verificar()){
+                echo $this->twig->getTwig()->render('inscricao\criacao.html', array(
+                    "user" => $_SESSION,
+                    "erros" => $con->Validacao(),
+                    "inscricao" => $_POST,
+                    "exist" => $con->verificar()
+                ));
+
+            }else{
+
+                if ($con->insertEventoAdmin() == 200){
+                    $response->redirect('/admin/inscricoes');
+                }else{
+                    echo "erro";
+                }
+
+            }
+            
         });
 
         $this->klein->respond('GET', '/confirmacao', function ($request, $response, $service) {   

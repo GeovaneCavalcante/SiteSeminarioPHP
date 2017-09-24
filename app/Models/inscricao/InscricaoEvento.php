@@ -38,6 +38,37 @@ class InscricaoEvento{
         }
     }
 
+    public function insertInscricaoAdmin($dados){
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('d-m-Y');
+        if($dados['numero_transacao']==0){
+            $dados['numero_transacao'] =  $dados['cpf'];
+        }
+        $sql = "
+            INSERT INTO inscricaoevento 
+            (
+                nome, email, telefone, cpf, dados_institucionais, instituicao, 
+                curso, data_criacao, tipo_inscricao, numero_transacao, status_pagamento, credenciado
+            )
+            VALUES 
+            (
+                '$dados[nome]', '$dados[email]', '$dados[telefone]', '$dados[cpf]', 
+                '$dados[dados_institucionais]', '$dados[instituicao]', '$dados[curso]',
+                '$date','$dados[tipo_inscricao]', '$dados[numero_transacao]', 
+                'Não pago', 'Não credenciado'
+            )
+        ";
+        
+        if ($this->connect->getConnection()->query($sql) == true){
+            echo "Criado com sucesso";
+            return ["status" => 200, "resultado" => "Criado com sucesso"];;
+        }else{
+            echo "Falha ao criar registro " . mysqli_error($this->connect->getConnection()); 
+            $error = $this->connect->getConnection()->error;
+            return ["status" => 405, "resultado" => "Falha ao criar registro: $error"];;
+        }
+    }
+
 
     public function getInscricoes(){
         
@@ -87,7 +118,7 @@ class InscricaoEvento{
         `instituicao` = '$dados[instituicao]', `curso` = '$dados[curso]',
         `tipo_inscricao` = '$dados[tipo_inscricao]', `numero_transacao` = '$dados[numero_transacao]',
         `status_pagamento` = '$dados[status_pagamento]', `data_criacao` = '$dados[data_criacao]',
-        `data_modificacao` = '$date'
+        `data_modificacao` = '$date', `credenciado` = '$dados[credenciado]'
         WHERE `inscricaoevento`.`id` = '$dados[id]'; 
         ";
       
