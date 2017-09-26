@@ -100,6 +100,22 @@ class Submicao{
             }
         }); 
 
+
+        $this->klein->respond('GET', '/admin/trabalhos/apaga', function ($request, $response, $service) {
+            
+            if ($_SESSION['status'] == true){
+                if($_GET['dados']){
+                    $n = new \App\Controllers\inscricao\SubmicaoList();
+                    $n->deletaTrabalho($_GET['dados']);
+                    $response->redirect('/admin/trabalhos');
+                }else{
+                    $response->redirect('/admin/trabalhos');
+                }
+            }else{
+                $response->redirect('/login');
+            }
+        });
+
         
     }
 }

@@ -40,7 +40,7 @@
     <tr>
       <th>Nome</th>
       <th>CPF</th>
-      <th>Telefone</th>
+      <th>Nº inscricao</th>
       <th>Nº Transação</th>
       <th>Situação</th>
       <th>Ações</th>
@@ -51,7 +51,7 @@
     <tr style="margin: 0px; padding: 0px">
       <td>{{inscricao.nome}}</td>
       <td>{{inscricao.cpf}}</td>
-      <td>{{inscricao.telefone}}</td>
+      <td>{{inscricao.id}}</td>
       <td>
         {% if inscricao.numero_transacao == inscricao.cpf%}
 
@@ -232,6 +232,7 @@
     <tr>
       <th>Nome</th>
       <th>CPF</th>
+      <th>Nº inscricao</th>
       <th>Nº Transação</th>
       <th>Situação</th>
       <th>Ações</th>

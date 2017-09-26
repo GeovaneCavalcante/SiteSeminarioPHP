@@ -134,10 +134,10 @@ class Submicao{
         }        
     }
 
-    function deletaInscricao($cpf){
+    function deletaTrabalho($id){
         $sql = "
-            DELETE FROM inscricaoevento
-            WHERE cpf='$cpf'
+            DELETE FROM trabalho
+            WHERE id='$id'
         ";
         if ($this->connect->getConnection()->query($sql) == true){
             echo "Resgistro apado";

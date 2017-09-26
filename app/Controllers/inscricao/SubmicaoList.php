@@ -45,5 +45,15 @@ class SubmicaoList{
         }
     }
 
+    public function deletaTrabalho($id){
+        $trabalho = $this->SubmicaoModel->deletaTrabalho($id);
+
+        if ($trabalho['status'] == 200){
+            echo "apagado";
+        }else{
+            echo 'ERRO';
+        }
+    }
+
    
 }
