@@ -1,0 +1,122 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h1 class="logo cursive lo" style="font-family: cs">
+    DeepWeek
+</h1>
+<br>
+
+
+<div class="content">
+
+    <div class="row">
+        
+        <form role="form" action="" method="post" style="color: white;">
+            <div class="row">
+                <div class="col-sm-12" style="text-align: center">
+
+                </div>
+                <br>
+            </div>
+            <div class="row" >
+              <div class="col-sm-2 col-xs-1"></div>
+              <div class="col-sm-8 col-xs-10" id="cont" style="padding: 0px">
+
+                <div class="alert alert-success suc">
+                  <h4><strong>Submição de Trabalho</strong></h4>
+                    <p>Siga os passos abaixo para submeter seu trabalho </p>
+                </div>
+                  <div class="alert alert-danger alert-dismissable" style="margin: 2%">
+                  <strong>Instruções:</strong><br>
+                      <br>
+                      <strong></strong> Abaixo segue o link com dois modelos dos trabalhos.
+                      <br>  <br> <strong>1º <a href="/1.pdf" target="_blank">MODELO DE RESUMO SIMPLES (REVISÃO DE LITERATURA)</a></strong><br>
+                      <strong>2º <a href="2.pdf" target="_blank">MODELO DE RESUMO SIMPLES (INVESTIGAÇÃO OU RELATO DE CASO)</a></strong>
+                </div>
+                  <ul class="list-group" style="color: black">
+                      <li class="list-group-item">
+                        <form role="form" action="/inscricao" method="post" style="color: white; ">
+                            
+                            <div class="row">
+                                <div class="col-sm-12" style="text-align: center">
+                                    <h3><strong>Preencha os dados</strong></h3>
+                                </div>
+                                <br>
+                                <div class="col-sm-6">
+                                        <div class="col-sm-12">
+                                            <div class="form-group {% if erros.titulo %} has-error {% endif %}">
+                
+                                                <label for="inputError1"  > Título do trabalho <b style="color: red">*</b></label>
+                                                <input type="text" value="{{dados.titulo}}" name="titulo" class="form-control" id="inputError1" placeholder="Título do trabalho">
+                                                {% if erros.titulo %}<strong style="color: red">Campo é obrigatório</strong>{% endif %}
+                                            </div>
+                                            <div class="form-group  {% if erros.primeiro_autor %} has-error {% endif %}">
+                                                <label for="exampleInputPassword1">Primeiro autor (a) <b style="color: red">*</b></label>
+                                                <input type="text" value="{{ dados.primeiro_autor }}" name="primeiro_autor" class="form-control" placeholder="Primeiro autor">
+                                                    {% if erros.primeiro_autor %}<strong style="color: red">Campo é obrigatório</strong>{% endif %}
+                                                
+                                            </div>
+                                        </div>    
+                                </div>  
+                                <div class="col-sm-6">
+                                        <div class="col-sm-12">
+                                            <div class="form-group  {% if erros.conhecimento %} has-error {% endif %}">
+                                                <label for="exampleInputEmail1">Área de conhecimento <b style="color: red">*</b></label>
+                                                <input type="text" value="{{ dados.conhecimento }}" name="conhecimento" class="form-control" id="exampleInputEmail1" placeholder="Área de conhecimento">
+                                                    {% if erros.conhecimento %}<strong style="color: red">Campo é obrigatório</strong>{% endif %}
+                                            </div>
+                                            <div class="form-group  {% if erros.coordenador   %} has-error {% endif %}">
+                                                <label for="exampleInputPassword1">Co-orientador (a): <b style="color: red">*</b></label>
+                                                <input type="text" value="{{ dados.coordenador }}" name="coordenador" class="form-control" placeholder="Co-orientador">
+                                                    {% if erros.coordenador %}<strong style="color: red">Campo é obrigatório</strong>{% endif %}
+                                                
+                                            </div>
+                                        </div>    
+                                </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-sm-6">
+                                            <div class="col-sm-12">
+                                                <div class="form-group {% if erros.nome %} has-error {% endif %}">
+                    
+                                                    <label for="inputError1"  >Demais autores</b></label>
+                                                    <input type="text" value="{{dados.nome}}" name="demais_autores" class="form-control" id="inputError1" placeholder="Nomes">
+                                                    <input name="inscricao" type="hidden" {% if dados.inscricao %} value="{{dados.inscricao}}" {% else %} value="{{get}}" {% endif %}>
+                                                    {% if erros.nome %}<strong style="color: red">Campo é obrigatório</strong>{% endif %}
+                                                </div>
+                                            </div>    
+                                    </div>  
+                                    <div class="col-sm-6">
+                                            <div class="col-sm-12">
+                                                <div class="form-group  {% if erros.orientador %} has-error {% endif %}">
+                                                    <label for="exampleInputEmail1">Orientador (a):<b style="color: red">*</b></label>
+                                                    <input type="text" value="{{ dados.orientador }}" name="orientador" class="form-control" id="exampleInputEmail1" placeholder="Orientador ">
+                                                        {% if erros.orientador %}<strong style="color: red">Campo é obrigatório</strong>{% endif %}
+                                                </div>
+                                            
+                                            </div>    
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-info btn-fill" style="margin-left: 2%"><strong>Submeter</strong></button>
+                                        <a href="/verificar" class="btn btn-danger btn-fill" ><strong>Cancelar</strong></a>
+                                    </div>
+                            </form>
+                      </li>
+                  </ul>
+              </div>
+              <div class="col-sm-2"></div>
+              
+            </div>
+            
+        </form>
+        <br>
+         <br>
+         <br>
+    </div>
+</div>
+</div>
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}

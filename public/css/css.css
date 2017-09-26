@@ -37,9 +37,8 @@
         margin-bottom: 5%;
     }
     .lo{
-    margin: 0px;
-}
-
+       margin: 0px;
+    }
 
 }
 @media (max-width: 768px){ 
@@ -53,7 +52,7 @@
         margin-bottom: 20%;
     }
     .lo{
-        padding-top: 30%;
+        padding-top: 20%;
     }
     
 }

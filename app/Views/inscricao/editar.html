@@ -39,8 +39,13 @@
                 <input value="{{inscricao.nome}}"   name="nome" type="text" class="form-control" id="exampleInputEmail1" placeholder="Nome completo"> {% if erros["nome"] %} <span class="help-block">Nome é obrigatório</span> {% endif %}
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Situação</label>
-                <input value="{{ inscricao.status_pagamento }}" name="status_pagamento"   type="text" class="form-control" id="exampleInputPassword1" placeholder="Situacao">
+                <label for="exampleInputPassword1">Pago</label>
+  
+                <select class="form-control" name="status_pagamento" placeholder="Situacao pagamento">
+                  <option>{{ inscricao.status_pagamento }}</option>
+                  <option>não</option>
+                  <option>sim</option>
+                </select>
               </div>
               <div class="form-group ">
                 <label for="exampleInputEmail1">Tipo da inscrição</label>
@@ -53,6 +58,7 @@
               <div class="form-group ">
                 <label for="exampleInputEmail1">Situação do credênciamento</label>
                 <input value="{{inscricao.credenciado }}"   name="credenciado" type="text" class="form-control" id="exampleInputEmail1" placeholder="Situação credênciamento"> 
+                
               </div>
             </div>
           </div>

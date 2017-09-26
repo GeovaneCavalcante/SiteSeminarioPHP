@@ -1,0 +1,91 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h1 class="logo cursive lo" style="font-family: cs">
+    Team DeepWeek
+</h1>
+<br>
+<div class="content">
+    <div class="row">
+        
+        <form role="form" action="" method="post" style="color: white;">
+            <div class="row">
+                <div class="col-sm-12" style="text-align: center">
+
+                </div>
+                <br>
+            </div>
+            <div class="row" >
+              <div class="col-sm-2 col-xs-1"></div>
+              <div class="col-sm-8 col-xs-10" id="cont" style="padding: 0px">
+
+                <div class="alert alert-warning  suc">
+                  <h4><strong>Atenção</strong></h4>
+                    <p>Siga os passos abaixo para realizar a submição</p>
+                </div>
+                  <div class="alert alert-danger alert-dismissable" style="margin: 2%">
+                  <strong>Instruções:</strong><br>
+                      <br>
+                      <strong>1º</strong> Para realizar a submição de trabalho, você antes deverá 
+                      ter realizado sua inscrição no evento.
+
+                      <br>  <br> <strong>2º</strong>
+                     Digite seu CPF no campo abaixo para verificar sua situação antes da submição.
+                </div>
+                  <ul class="list-group" style="color: black">
+                      <li class="list-group-item">
+                        <div class="row">
+                                
+                            <div class="col-sm-4">
+                                <form action="/verificar" method="post">
+                                    <div class="form-group  {% if errors.cpf or verificada.cpf  %} has-error {% endif %}">
+                                        <label for="exampleInputPassword1" style="text-align: center">CPF <b style="color: red">*</b></label>
+                                        <input type="text" value="{{ dados.cpf }}" name="cpf" class="form-control" id="datemask" placeholder="CPF" data-inputmask='"mask": "999.999.999-99"' data-mask>
+                                        {% if errors.cpf %}<strong style="color: red">Campo é obrigatório</strong>{% endif %}
+                                    </div>
+                                </form>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-info btn-fill"><strong>Verificar</strong></button>
+                                </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                      </li>
+                   
+                        {% if veri.cpf_exit %}
+                        <div class="alert alert-danger alert-dismissable" style="margin: 2%">
+                                <h5><strong>CPF não inscrito</strong><br></h5>
+                                <a href="/inscricao" type="submit" class="btn btn-danger btn-fill"><strong>Inscrever</strong></a>
+                                    
+                                </div>
+                        {% endif %}
+                        {% if veri.cpf == "not" %}
+                                <div class="alert alert-danger alert-dismissable" style="margin: 2%">
+                                <h5><strong>Participante:</strong> {{veri['dados'].nome}} está com pendência na sua inscrinção<br></h5>
+                                <a href="/confirmacao" type="submit" class="btn btn-danger btn-fill"><strong>Confirmar inscrição</strong></a>
+                                </div>
+                        {% endif %}
+                        {% if veri.cpf == "ok" %}
+                            <div class="alert alert-success alert-dismissable" style="margin: 2%">
+                            <h5><strong> {{veri['dados'].nome}} </strong> Está com inscrição concluida, por favor click para realizar a submição do seu trabalho!<br></h5>
+                            <a href="/submeter?id={{veri['dados'].id}}" type="submit" class="btn btn-danger btn-fill"><strong>Submeter</strong></a>
+                            </div>
+                        {% endif %}
+
+                     
+                     
+                  </ul>
+              </div>
+              <div class="col-sm-2"></div>
+            </div>
+        </form>
+        <br>
+         <br>
+         <br>
+    </div>
+</div>
+</div>
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}

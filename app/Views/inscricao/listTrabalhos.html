@@ -1,0 +1,255 @@
+{% extends "account/base.html" %} {% block title %}
+<title>DeepWeek | Lista</title>{% endblock %}
+{% block contentheader %}
+<h1>
+        Inscrições
+        <small>Lista de inscrições</small>
+    </h1>
+<ol class="breadcrumb">
+  <li><a href="#"><i class="fa fa-user-plus"></i>Inscrições</a></li>
+  <li class="active">Lista de inscrições</li>
+</ol>
+{% endblock %} 
+{% block li %}
+  <li><a href="/admin/inscricoes/criar"><i class="fa fa-user-plus"></i> Inscrições</a></li>
+  <li class="active"><a href="/admin/inscricoes"><i class="fa fa-edit"></i> Lista de inscrições</a></li>
+{% endblock %}
+{% block content %}
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Inscrições</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-striped" id="example1">
+      <div class="row linha">
+        <div class="col-sm-3">
+          <!--
+          <div class="input-group">
+            <label for="">Pesquisa</label>
+            <input onkeyup="showResult(this.value)"  type="text" class="form-control" placeholder="Digite o nome">
+           
+          </div>
+        -->
+        </div>
+        <div class="col-sm-9">
+        </div>
+      </div>
+  </div>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Área de conhecimento</th>
+      <th>Orientador</th>
+      <th>Co-orientador</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody id="livesearch" style="margin: 0px; padding: 0px">
+    {% for trabalho in trabalhos %}
+    <tr style="margin: 0px; padding: 0px">
+      <td>{{trabalho.primeiro_autor}}</td>
+      <td>{{trabalho.titulo}}</td>
+      <td>{{trabalho.orientador}}</td>
+      <td>
+        {{trabalho.coordenador}}
+      </td>
+      <td>
+        <div class="row buta">
+          <button title="Visualizar" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-defaultv{{inscricao.id}}"> <i class="fa fa-eye"></i> </button>
+          <button title="Excluir" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-defaulta{{inscricao.id}}"><i class="fa fa-close"></i> </button>
+        </div>
+      </td>
+
+       <!-- /.apagar -->
+       <div class="modal fade" id="modal-defaulta{{inscricao.id}}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="alert alert-danger alert-dismissible modalre">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Atenção</h4>
+              </div>  
+              <div class="panel-body">
+              <h4> Ao confirma a exclução, você irá apagar totalmente os dados de: <strong>{{inscricao.nome}}</strong></h4>
+              <br>
+            </div>
+            <div class="modal-footer" style="background: white">
+              <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Cancelar</button>
+              <a href="/admin/inscricoes/apaga?dados={{inscricao.cpf}}" class="btn btn-danger"role="button">Deletar <i class="fa fa-close"></i> </i></a>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.apagar -->
+
+
+      <div class="modal fade bs-example-modal-lg " tabindex="-1" id="modal-defaultv{{inscricao.id}}">
+        <div class="modal-dialog modal-lg " role="document">
+          <div class="modal-content modalborda">
+          
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box box-primary ">
+                  <div class="box-header with-border">
+                    <h1 class="box-title">Ficha de inscrição</h1>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-4">
+                        <div class="box-body">
+                          <div class="form-group ">
+                            <label for="exampleInputEmail1">Nome Completo </label>
+                            <input value="{{inscricao.nome}}" disabled  name="nome" type="text" class="form-control" id="exampleInputEmail1" placeholder="Nome completo"> {% if erros["nome"] %} <span class="help-block">Nome é obrigatório</span> {% endif %}
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Situação</label>
+                            <input value="{% if inscricao.status_pagamento %}{{ inscricao.status_pagamento }}{% else%} Não pago {% endif%}" name="email" disabled  type="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
+                          </div>
+                          <div class="form-group ">
+                            <label for="exampleInputEmail1">Tipo da inscrição</label>
+                            <input value="{{inscricao.tipo_inscricao }}" disabled  name="nome" type="text" class="form-control" id="exampleInputEmail1" placeholder="Tipo inscrição"> {% if erros["nome"] %} <span class="help-block">Nome é obrigatório</span> {% endif %}
+                          </div>
+                          <div class="form-group ">
+                            <label for="exampleInputEmail1">Número da transação</label>
+                            <input {% if inscricao.numero_transacao == inscricao.cpf %}{% else %}value="{{inscricao.numero_transacao }}"{% endif %} disabled  name="nome" type="text" class="form-control" id="exampleInputEmail1" placeholder="Numero da transação"> {% if erros["nome"] %} <span class="help-block">Nome é obrigatório</span> {% endif %}
+                          </div>
+                          <div class="form-group ">
+                              <label for="exampleInputEmail1">Situação do credênciamento</label>
+                              <input value="{{inscricao.credenciado }}" disabled  name="nome" type="text" class="form-control" id="exampleInputEmail1" placeholder="Numero da transação"> {% if erros["nome"] %} <span class="help-block">Nome é obrigatório</span> {% endif %}
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">
+                                     CPF</label>
+                                <input value="{{inscricao.cpf}}" disabled  name="cpf" type="text"  class="form-control" id="exampleInputEmail1" placeholder="CPF" data-inputmask='"mask": "999.999.999-99"' data-mask> {% if erros["cpf"] %} <span class="help-block">CPF é obrigatório</span>                    {% endif %} {% if exist["cpf"] %} <span class="help-block">CPF já está cadastrado</span> {% endif %}
+                              </div>
+                              <div class="form-group">
+                                <label>Modalidade de inscrição</label>
+                                <input type="text" disabled value="{{inscricao.dados_institucionais}}" class="form-control">
+                              </div>
+                              <div class="form-group">
+                                <label>Instituição</label>
+                                <input type="text" disabled value="{{inscricao.instituicao}}" class="form-control">
+                              </div>
+                              <div class="form-group">
+                                <label>Curso</label>
+                                <input type="text" disabled value="{{inscricao.curso}}" class="form-control">
+                              </div>
+                              <div class="form-group">
+                                  <label for="exampleInputPassword1">Email</label>
+                                  <input value="{{ inscricao.email }}" name="email" disabled  type="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-12">
+                            
+                              <div class="form-group">
+                                <label>Telefone</label>
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                  </div>
+                                  <input value="{{ inscricao.telefone }}" disabled  name="telefone" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                                </div>
+                                <!-- /.input group -->
+                              </div>
+
+                              <div class="form-group">
+                                <label> Data Inscrição</label>
+            
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+            
+                                  </div>
+                                  <input value="{{inscricao.data_criacao}}" disabled  name="data" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                </div>
+                        
+                              </div>
+
+                              <div class="form-group">
+                                  <label> Data de Modificação da inscrição</label>
+              
+                                  <div class="input-group">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+              
+                                    </div>
+                                    <input value="{{inscricao.data_modificacao}}" disabled  name="data" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                  </div>
+                          
+                                </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">Número da inscrição</label>
+                                <input value="{{ inscricao.id }}" name="email" disabled  type="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="box-footer">
+                          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Fechar</button>
+                        </div>
+                      </div>
+                   
+                  </div>
+                </div>
+              </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <!-- fim model ver -->
+
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <th>Nome</th>
+    <th>Área de conhecimento</th>
+    <th>Orientador</th>
+    <th>Co-orientador</th>
+    <th>Ações</th>
+  </tfoot>
+  </table>
+  <div class="row linha2">
+    <div class="col-sm-12">
+      <!--
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item disabled">
+            <span class="page-link">Antes</span>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item active">
+            <span class="page-link">
+                            2
+            <span class="sr-only">(current)</span>
+            </span>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Próximo</a>
+          </li>
+        </ul>
+      </nav>-->
+    </div>
+  </div>
+</div>
+<!-- /.box-body -->
+</div>
+{% endblock %}

@@ -27,6 +27,9 @@ class Routes {
 
         $inscricao = new \App\Routes\inscricao\InscricaoEvento($this->klein, $this->twig);
         $inscricao->start();
+
+        $submicao = new \App\Routes\inscricao\Submicao($this->klein, $this->twig);
+        $submicao->start();
         
         /*Home da aplicação*/
         $core = new \App\Routes\core\Core($this->klein, $this->twig);

@@ -2,7 +2,7 @@
 
 namespace App\Models\inscricao;
 
-class InscricaoEvento{
+class Submicao{
 
     private $connect;
 
@@ -10,21 +10,22 @@ class InscricaoEvento{
         $this->connect = new \Config\Connect();
     } 
 
-    public function insertInscricao($dados){
-        date_default_timezone_set('America/Sao_Paulo');
-        $date = date('d-m-Y');
-    
+    public function insertSubmicao($dados){
+        
+        if($dados['demais_autores']){
+            $dados['demais_autores'] = "";
+        }
+
         $sql = "
-            INSERT INTO inscricaoevento 
+             INSERT INTO `trabalho` 
             (
-                nome, email, telefone, cpf, dados_institucionais, instituicao, 
-                curso, data_criacao, status_pagamento, credenciado
-            )
-            VALUES 
-            (
-                '$dados[nome]', '$dados[email]', '$dados[telefone]', '$dados[cpf]', 
-                '$dados[dados_institucionais]', '$dados[instituicao]', '$dados[curso]',
-                '$date', 'Não pago', 'Não credenciado'
+                 `id`, `titulo`, `conhecimento`, `primeiro_autor`,
+                 `demais_autores`, `orientador`, `coordenador`, `inscricao`
+            ) 
+            VALUES(
+                 '', '$dados[titulo]', '$dados[conhecimento]', '$dados[primeiro_autor]',
+                 '$dados[demais_autores]', '$dados[orientador]', 
+                 '$dados[coordenador]', '$dados[inscricao]'
             )
         ";
         
@@ -70,9 +71,9 @@ class InscricaoEvento{
     }
 
 
-    public function getInscricoes(){
+    public function getTrabalhos(){
         
-        $sql = "SELECT * FROM inscricaoevento order by nome asc
+        $sql = "SELECT * FROM trabalho order by titulo asc
         ";
         $result = $this->connect->getConnection()->query($sql);
 
@@ -91,9 +92,9 @@ class InscricaoEvento{
     }
 
 
-    public function getInscricao($cpf){
+    public function getSubmicaoVerificada($id){
         
-        $sql = "select * from inscricaoevento where cpf = '$cpf'";
+        $sql = "select * from trabalho where inscricao = '$id'";
         $result = $this->connect->getConnection()->query($sql); 
         $resultado = mysqli_fetch_assoc($result);
 
